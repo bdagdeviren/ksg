@@ -1,0 +1,23 @@
+Create Request
+
+{
+    "name":"burak",
+    "namespace":"test",
+    "ports": [
+        {
+            "type":"TCP",
+            "port":"19090"
+        },
+        {
+            "type":"UDP",
+            "port":"19091"
+        }
+    ]
+}
+
+Delete Request
+
+{
+    "name":"burak",
+    "namespace":"test"
+}
