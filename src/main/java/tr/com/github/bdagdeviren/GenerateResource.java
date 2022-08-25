@@ -8,6 +8,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 @Path("/generate")
 public class GenerateResource {
@@ -40,7 +41,7 @@ public class GenerateResource {
             ServicePort servicePort = new ServicePortBuilder().withName("port"+i).withProtocol(port.getType()).withPort(portIntOrString.getIntVal()).withTargetPort(portIntOrString).build();
             ports.add(servicePort);
         }
-        ServiceSpec specBuilder = new ServiceSpecBuilder().addAllToPorts(ports).build();
+        ServiceSpec specBuilder = new ServiceSpecBuilder().addAllToPorts(ports).addToSelector(System.getenv("SELECTOR_TYPE".toLowerCase(Locale.ROOT)),System.getenv("SELECTOR_APP".toLowerCase(Locale.ROOT))).build();
         Service service = new ServiceBuilder().withNewMetadata().withName(generate.getName()).endMetadata().withSpec(specBuilder).build();
 
         kubernetesClient.services().inNamespace(namespace).create(service);
